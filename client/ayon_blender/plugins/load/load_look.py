@@ -53,7 +53,7 @@ class BlendLookLoader(plugin.BlenderLoader):
                 {"value": "scene", "label": "All objects in scene"},
                 {"value": "none", "label": "Don't assign"},
             ],
-            default="selected",
+            default="scene",
             tooltip=(
                 "Assign the look materials to objects whose names match"
                 " the objects the look was published with."
@@ -211,7 +211,7 @@ class BlendLookLoader(plugin.BlenderLoader):
 
         # Get the objects to assign the materials to before the selection
         # is cleared
-        assign_scope = options.get("assign_materials", "selected")
+        assign_scope = options.get("assign_materials", "scene")
         objects_to_assign = self._get_objects_to_assign(assign_scope)
         if assign_scope == "selected" and not objects_to_assign:
             self.log.warning(
