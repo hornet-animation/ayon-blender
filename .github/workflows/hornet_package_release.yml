@@ -12,7 +12,7 @@ on:
       - develop
     paths-ignore:
       - 'package.py'
-      - 'client/ayon_nuke/version.py'
+      - 'client/ayon_blender/version.py'
 
 jobs:
   build-and-release:
@@ -82,8 +82,8 @@ jobs:
 
           print(f"Updated package.py: {current_version} -> {new_version}")
 
-          # Update client/ayon_nuke/version.py if it exists
-          client_version_path = 'client/ayon_nuke/version.py'
+          # Update client/ayon_blender/version.py if it exists
+          client_version_path = 'client/ayon_blender/version.py'
           if os.path.exists(client_version_path):
               with open(client_version_path, 'r') as f:
                   client_content = f.read()
@@ -145,13 +145,13 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            package/nuke-${{ steps.increment_version.outputs.version }}.zip
+            package/blender-${{ steps.increment_version.outputs.version }}.zip
           generate_release_notes: true
 
       - name: Commit version changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add package.py client/ayon_nuke/version.py
+          git add package.py client/ayon_blender/version.py
           git commit -m "CI bump version to ${{ steps.increment_version.outputs.version }}"
           git push
