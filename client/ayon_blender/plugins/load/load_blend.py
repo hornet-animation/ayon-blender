@@ -107,8 +107,11 @@ class BlendLoader(plugin.BlenderLoader):
 
         # Rename the object to add the asset name
         members = []
-        for attr in dir(data_to):
-            from_names: list[str] = names_by_attr[attr]
+        # Hornet Added by Natalie 11/19/2026 to prevent load crashes when files contain linked blend files
+        # for attr in dir(data_to):
+        #     from_names: list[str] = names_by_attr[attr]
+        #     values = getattr(data_to, attr)
+        for attr, from_names in names_by_attr.items():
             values = getattr(data_to, attr)
             if not isinstance(values, list):
                 continue
