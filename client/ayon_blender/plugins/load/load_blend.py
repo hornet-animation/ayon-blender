@@ -108,15 +108,15 @@ class BlendLoader(plugin.BlenderLoader):
         # Rename the object to add the asset name
         members = []
         for attr in dir(data_to):
-            # HORNET Added by Natalie 11/19/2026 to prevent load crashes when files contain linked blend files
-            if not isinstance(data, bpy.types.ID):
-                continue
             from_names: list[str] = names_by_attr[attr]
             values = getattr(data_to, attr)
             if not isinstance(values, list):
                 continue
 
             for from_name, data in zip(from_names, values):
+                # HORNET Added by Natalie 11/19/2026 to prevent load crashes when files contain linked blend files
+                if not isinstance(data, bpy.types.ID):
+                    continue
                 data.name = f"{group_name}:{from_name}"
                 members.append(data)
 
