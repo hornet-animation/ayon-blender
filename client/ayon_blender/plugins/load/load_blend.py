@@ -96,6 +96,9 @@ class BlendLoader(plugin.BlenderLoader):
             libpath, link=False, relative=False
         ) as (data_from, data_to):
             for attr in dir(data_to):
+                # HORNET Added by Natalie 11/19/2026 to prevent load crashes when files contain linked blend files
+                if attr in {"libraries", "version"}:
+                    continue
                 values = getattr(data_from, attr)
                 # store copy of list of names because the main list will
                 # be replaced with the data from the library after the context
@@ -105,6 +108,9 @@ class BlendLoader(plugin.BlenderLoader):
         # Rename the object to add the asset name
         members = []
         for attr in dir(data_to):
+            # HORNET Added by Natalie 11/19/2026 to prevent load crashes when files contain linked blend files
+            if not isinstance(data, bpy.types.ID):
+                continue
             from_names: list[str] = names_by_attr[attr]
             values = getattr(data_to, attr)
             if not isinstance(values, list):
